@@ -11,6 +11,7 @@ import UIKit
 class ViewController: UIViewController {
     
     
+    
     @IBOutlet var vCardsHolder: UIView!
     
     override func viewDidLoad() {
@@ -18,14 +19,21 @@ class ViewController: UIViewController {
         // Do any additional setup after loading the view, typically from a nib.
         
         
-        //Looping through cards
+        //Looping through card
         for case let card as UIButton in vCardsHolder.subviews {
+            //Setting click listener
             card.addTarget(self,action: #selector(onCardClicked),for: .touchUpInside)
         }
+        
+        
     }
     
     @objc func onCardClicked(card: UIButton!){
-        card.backgroundColor = .red
+        
+        //Card clicked
+        
+        //Incrementing flip count
+        
     }
     
     override func didReceiveMemoryWarning() {
