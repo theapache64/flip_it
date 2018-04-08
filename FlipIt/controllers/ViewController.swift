@@ -10,14 +10,19 @@ import UIKit
 
 class ViewController: UIViewController {
     
-    
+    var flipCount = 0 {
+        didSet{lblFlipCount.text = "\(flipCount)"
+        }
+    }
+    var cards = [Card]()
     
     @IBOutlet var vCardsHolder: UIView!
+    @IBOutlet var lblFlipCount: UILabel!
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        
         
         //Looping through card
         for case let card as UIButton in vCardsHolder.subviews {
@@ -26,14 +31,34 @@ class ViewController: UIViewController {
         }
         
         
+        
+      
+        cards = try! CardUtils.getRandomCards(count : vCardsHolder.subviews.count)
+        
+        
+        
     }
     
-    @objc func onCardClicked(card: UIButton!){
+    @objc func onCardClicked(cardButton: UIButton!){
         
         //Card clicked
+        let cardIndex = vCardsHolder.subviews.index(of: cardButton)
+        var card = cards[cardIndex!]
         
-        //Incrementing flip count
-        
+        if(!card.isFlipped){
+            
+            print(card)
+            
+            print("Card index:  \(cardIndex!)")
+            
+            card.isFlipped = true
+            
+            cardButton.setTitle(card.emoji, for: .normal)
+            cardButton.backgroundColor = UIColor.darkGray
+            
+            //Incrementing flip count
+            flipCount += 1
+        }
     }
     
     override func didReceiveMemoryWarning() {

@@ -284,8 +284,8 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="20" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yM3-G4-f1E">
-                                <rect key="frame" x="163" y="613" width="49" height="46"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yM3-G4-f1E">
+                                <rect key="frame" x="175" y="613" width="25.5" height="46"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="38"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -305,6 +305,7 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="lblFlipCount" destination="yM3-G4-f1E" id="HZy-OA-l3q"/>
                         <outlet property="vCardsHolder" destination="fLM-AS-JaM" id="Rvg-Jq-Xfc"/>
                     </connections>
                 </viewController>
