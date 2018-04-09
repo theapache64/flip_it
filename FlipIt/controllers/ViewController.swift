@@ -7,6 +7,9 @@
 //
 
 import UIKit
+import AudioToolbox.AudioServices
+import AVFoundation
+
 
 class ViewController: UIViewController {
     
@@ -15,6 +18,7 @@ class ViewController: UIViewController {
         }
     }
     
+    var matchesHappend = 0
     
     var firstCard : (Card, UIButton)?
     var secondCard : (Card, UIButton)?
@@ -25,6 +29,7 @@ class ViewController: UIViewController {
     @IBOutlet var vCardsHolder: UIView!
     @IBOutlet var lblFlipCount: UILabel!
     
+    var pointSound  : AVAudioPlayer?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,14 +42,44 @@ class ViewController: UIViewController {
         }
         
         cards = try! CardUtils.getRandomCards(count : vCardsHolder.subviews.count)
+        do{
+            let soundUrl = Bundle.main.url(forResource: "points", withExtension: "wav")
+            pointSound = try AVAudioPlayer(contentsOf: soundUrl!)
+            pointSound?.prepareToPlay()
+        }catch let error {
+            print(error)
+        }
         
     }
+    
+    @IBAction func onResetGameClicked(_ button : UIButton) {
+        resetGame()
+    }
+    
+    private func resetGame(){
+        cards = try! CardUtils.getRandomCards(count : vCardsHolder.subviews.count)
+        
+        for case let card as UIButton in vCardsHolder.subviews {
+            //Setting click listener
+            card.isHidden = false
+            card.setTitle("", for: .normal)
+        }
+        
+        firstCard = nil
+        secondCard = nil
+        
+        flipCount = 0
+        matchesHappend = 0
+    }
+    
     
     @objc func onCardClicked(cardButton: UIButton!){
         
         //Card clicked
         let cardIndex = vCardsHolder.subviews.index(of: cardButton)
         let card = cards[cardIndex!]
+        
+    
         
         if(!card.isFlipped){
             
@@ -71,6 +106,7 @@ class ViewController: UIViewController {
                 
                 //Match or hide
                 if(firstCard?.0.emoji==secondCard?.0.emoji){
+                    
                     //Match
                     firstCard?.1.isHidden = true
                     secondCard?.1.isHidden = true
@@ -78,7 +114,11 @@ class ViewController: UIViewController {
                     firstCard = nil
                     secondCard = nil
                     
+                    matchesHappend += 2
+                    pointSound?.play()
+
                     
+        
                 }else{
                     
                     //No match flip it out
@@ -89,6 +129,8 @@ class ViewController: UIViewController {
                     secondCard?.0.isFlipped = false
                     
                     secondCard = nil
+                    
+                    AudioServicesPlaySystemSound(kSystemSoundID_Vibrate);
                 }
                 
                 card.isFlipped = true
@@ -97,7 +139,23 @@ class ViewController: UIViewController {
                 firstCard = (card,cardButton)
             }
             
+        }
+        
+      
+        
+        if (matchesHappend + 2) == cards.count {
             
+         
+            
+            //Game finished
+            let alert = UIAlertController(title: "Congratulations", message: "You've succesfully finished the game with \(flipCount) flips. Do you want to try again ?", preferredStyle: .alert)
+            
+            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+            
+            
+            self.present(alert, animated: true, completion: nil)
+            
+            resetGame()
             
         }
         
