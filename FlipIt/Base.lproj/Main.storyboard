@@ -154,7 +154,7 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="trailing" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VFF-R5-Jfi">
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="trailing" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VFF-R5-Jfi">
                                 <rect key="frame" x="329" y="660" width="77" height="63"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="42"/>
                                 <state key="normal" title="⚡︎">
@@ -164,24 +164,40 @@
                                     <action selector="onResetGameClicked:" destination="BYZ-38-t0r" eventType="touchUpInside" id="YwH-oc-7Zm"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="17X-g3-ETT">
+                                <rect key="frame" x="8" y="659" width="77" height="63"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="42"/>
+                                <state key="normal" title="✕">
+                                    <color key="titleColor" red="0.37055522200000002" green="0.37056469920000001" blue="0.37055957319999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="onExitButtonClicked:" destination="BYZ-38-t0r" eventType="touchUpInside" id="TCN-XT-U51"/>
+                                    <action selector="onResetGameClicked:" destination="BYZ-38-t0r" eventType="touchUpInside" id="dNr-vX-HUK"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="fLM-AS-JaM" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="8" id="22F-Pk-TvT"/>
+                            <constraint firstItem="tTW-Xz-mLN" firstAttribute="top" secondItem="17X-g3-ETT" secondAttribute="bottom" constant="14" id="2sK-Jd-0yH"/>
                             <constraint firstItem="VFF-R5-Jfi" firstAttribute="leading" secondItem="Ehw-jd-MGs" secondAttribute="trailing" constant="70.5" id="6Gb-RX-WDf"/>
                             <constraint firstItem="tTW-Xz-mLN" firstAttribute="top" secondItem="yM3-G4-f1E" secondAttribute="bottom" constant="8" id="AoS-6V-uX4"/>
                             <constraint firstItem="fLM-AS-JaM" firstAttribute="top" secondItem="puU-zX-89l" secondAttribute="bottom" constant="8" id="BVe-Be-VAU"/>
                             <constraint firstItem="yM3-G4-f1E" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="EnA-Bo-W5w"/>
                             <constraint firstItem="Ehw-jd-MGs" firstAttribute="top" secondItem="fLM-AS-JaM" secondAttribute="bottom" constant="22" id="F6L-7j-lC6"/>
                             <constraint firstItem="yM3-G4-f1E" firstAttribute="top" secondItem="Ehw-jd-MGs" secondAttribute="bottom" constant="2" id="UOC-Fb-PDb"/>
+                            <constraint firstItem="17X-g3-ETT" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="8" id="VwS-RF-L6g"/>
                             <constraint firstItem="Ehw-jd-MGs" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="ZMH-Nc-gZu"/>
                             <constraint firstAttribute="trailing" secondItem="fLM-AS-JaM" secondAttribute="trailing" constant="8" id="dU8-ha-iQu"/>
+                            <constraint firstItem="Ehw-jd-MGs" firstAttribute="leading" secondItem="17X-g3-ETT" secondAttribute="trailing" constant="70.670000000000002" id="eiu-uG-mR4"/>
                             <constraint firstItem="VFF-R5-Jfi" firstAttribute="top" secondItem="fLM-AS-JaM" secondAttribute="bottom" constant="22" id="lqv-3u-dzA"/>
                             <constraint firstItem="tTW-Xz-mLN" firstAttribute="top" secondItem="VFF-R5-Jfi" secondAttribute="bottom" constant="13" id="pjk-7A-zFJ"/>
                             <constraint firstAttribute="trailing" secondItem="VFF-R5-Jfi" secondAttribute="trailing" constant="8" id="seq-ay-QA5"/>
+                            <constraint firstItem="17X-g3-ETT" firstAttribute="top" secondItem="fLM-AS-JaM" secondAttribute="bottom" constant="21" id="usr-DO-W4n"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="bResetCards" destination="VFF-R5-Jfi" id="iJY-VS-6kn"/>
                         <outlet property="lblFlipCount" destination="yM3-G4-f1E" id="HZy-OA-l3q"/>
                         <outlet property="vCardsHolder" destination="fLM-AS-JaM" id="Rvg-Jq-Xfc"/>
                     </connections>

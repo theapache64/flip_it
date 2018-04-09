@@ -15,6 +15,7 @@ class ViewController: UIViewController {
     
     var flipCount = 0 {
         didSet{lblFlipCount.text = "\(flipCount)"
+            bResetCards.isHidden = flipCount == 0
         }
     }
     
@@ -32,11 +33,16 @@ class ViewController: UIViewController {
     @IBOutlet var vCardsHolder: UIView!
     @IBOutlet var lblFlipCount: UILabel!
     
+    @IBOutlet var bResetCards: UIButton!
+    
     var pointSound  : AVAudioPlayer?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        
+        //Setting reset button hidden at first
+        
         
         //Looping through card
         for case let card as UIButton in vCardsHolder.subviews {
@@ -81,6 +87,15 @@ class ViewController: UIViewController {
         )
     }
     
+    @IBAction func onExitButtonClicked(_ sender: Any) {
+        let alert = UIAlertController(title: "Exit?", message: "Are you sure about this?", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { _ in
+            exit(0)
+        }))
+        alert.addAction(UIAlertAction(title : "Cancel", style: .default,handler : nil))
+        self.present(alert, animated: true, completion: nil)
+    }
+    
     private func resetGame(){
         cards = try! CardUtils.getRandomCards(count : vCardsHolder.subviews.count)
         
@@ -101,11 +116,22 @@ class ViewController: UIViewController {
     
     @objc func onCardClicked(cardButton: UIButton!){
         
+        
+        
         //Card clicked
         let cardIndex = vCardsHolder.subviews.index(of: cardButton)
         let card = cards[cardIndex!]
         
+        
         if(!card.isFlipped){
+            
+            UIView.animate(withDuration: 0.2, animations: {
+                cardButton.transform = CGAffineTransform(scaleX: 0.9, y: 0.9)
+            }, completion: { _ in
+                UIView.animate(withDuration: 0.2, animations: {
+                    cardButton.transform = CGAffineTransform.identity
+                })
+            })
             
             flipCount += 1
             
@@ -114,6 +140,7 @@ class ViewController: UIViewController {
                 card.isFlipped = true
                 cardButton.setTitle(card.emoji, for: .normal)
                 cardButton.backgroundColor = activeCardBg
+                
                 
                 firstCard = (card,cardButton)
                 return
@@ -177,7 +204,7 @@ class ViewController: UIViewController {
          
             
             //Game finished
-            let alert = UIAlertController(title: "Congratulations", message: "You've succesfully finished the game with \(flipCount) flips. Do you want to try again ?", preferredStyle: .alert)
+            let alert = UIAlertController(title: "Congratulations", message: "You've succesfully finished the game with \(flipCount) flips", preferredStyle: .alert)
             
             alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
             
