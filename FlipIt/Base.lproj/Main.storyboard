@@ -172,7 +172,6 @@
                                 </state>
                                 <connections>
                                     <action selector="onExitButtonClicked:" destination="BYZ-38-t0r" eventType="touchUpInside" id="TCN-XT-U51"/>
-                                    <action selector="onResetGameClicked:" destination="BYZ-38-t0r" eventType="touchUpInside" id="dNr-vX-HUK"/>
                                 </connections>
                             </button>
                         </subviews>
