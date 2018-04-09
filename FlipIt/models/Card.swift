@@ -9,11 +9,14 @@
 import Foundation
 
 public class Card{
+    
     var emoji : String
     var isFlipped : Bool
+    
     
     init(emoji : String, isFlipped : Bool){
         self.emoji = emoji
         self.isFlipped = isFlipped
     }
+    
 }

@@ -14,6 +14,12 @@ class ViewController: UIViewController {
         didSet{lblFlipCount.text = "\(flipCount)"
         }
     }
+    
+    
+    var firstCard : (Card, UIButton)?
+    var secondCard : (Card, UIButton)?
+    
+    
     var cards = [Card]()
     
     @IBOutlet var vCardsHolder: UIView!
@@ -30,12 +36,7 @@ class ViewController: UIViewController {
             card.addTarget(self,action: #selector(onCardClicked),for: .touchUpInside)
         }
         
-        
-        
-      
         cards = try! CardUtils.getRandomCards(count : vCardsHolder.subviews.count)
-        
-        
         
     }
     
@@ -43,22 +44,64 @@ class ViewController: UIViewController {
         
         //Card clicked
         let cardIndex = vCardsHolder.subviews.index(of: cardButton)
-        var card = cards[cardIndex!]
+        let card = cards[cardIndex!]
         
         if(!card.isFlipped){
             
-            print(card)
-            
-            print("Card index:  \(cardIndex!)")
-            
-            card.isFlipped = true
-            
-            cardButton.setTitle(card.emoji, for: .normal)
-            cardButton.backgroundColor = UIColor.darkGray
-            
-            //Incrementing flip count
             flipCount += 1
+            
+            if(firstCard==nil){
+                
+                card.isFlipped = true
+                cardButton.setTitle(card.emoji, for: .normal)
+                
+                firstCard = (card,cardButton)
+                return
+            }
+            
+            if(secondCard==nil){
+                card.isFlipped = true
+                cardButton.setTitle(card.emoji, for: .normal)
+                
+                secondCard = (card,cardButton)
+                return
+            }
+            
+            if(firstCard != nil && secondCard != nil){
+                
+                //Match or hide
+                if(firstCard?.0.emoji==secondCard?.0.emoji){
+                    //Match
+                    firstCard?.1.isHidden = true
+                    secondCard?.1.isHidden = true
+                    
+                    firstCard = nil
+                    secondCard = nil
+                    
+                    
+                }else{
+                    
+                    //No match flip it out
+                    firstCard?.1.setTitle("", for: .normal)
+                    secondCard?.1.setTitle("", for: .normal)
+                    
+                    firstCard?.0.isFlipped = false
+                    secondCard?.0.isFlipped = false
+                    
+                    secondCard = nil
+                }
+                
+                card.isFlipped = true
+                cardButton.setTitle(card.emoji, for: .normal)
+                
+                firstCard = (card,cardButton)
+            }
+            
+            
+            
         }
+        
+        
     }
     
     override func didReceiveMemoryWarning() {
