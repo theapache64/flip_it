@@ -38,8 +38,7 @@ class CardUtils{
         
         //Getting number of pairs
         let numOfPairs = count / 2
-        
-        
+   
         if (numOfPairs <= emojiEngine.count){
             
             //Acceptable pair

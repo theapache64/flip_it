@@ -18,6 +18,9 @@ class ViewController: UIViewController {
         }
     }
     
+    let normalCardBg = hexStringToUIColor(hex: "#E0E0E0")
+    let activeCardBg = hexStringToUIColor(hex: "#BDBDBD")
+    
     var matchesHappend = 0
     
     var firstCard : (Card, UIButton)?
@@ -56,6 +59,28 @@ class ViewController: UIViewController {
         resetGame()
     }
     
+    private static func hexStringToUIColor (hex:String) -> UIColor {
+        var cString:String = hex.trimmingCharacters(in: .whitespacesAndNewlines).uppercased()
+        
+        if (cString.hasPrefix("#")) {
+            cString.remove(at: cString.startIndex)
+        }
+        
+        if ((cString.count) != 6) {
+            return UIColor.gray
+        }
+        
+        var rgbValue:UInt32 = 0
+        Scanner(string: cString).scanHexInt32(&rgbValue)
+        
+        return UIColor(
+            red: CGFloat((rgbValue & 0xFF0000) >> 16) / 255.0,
+            green: CGFloat((rgbValue & 0x00FF00) >> 8) / 255.0,
+            blue: CGFloat(rgbValue & 0x0000FF) / 255.0,
+            alpha: CGFloat(1.0)
+        )
+    }
+    
     private func resetGame(){
         cards = try! CardUtils.getRandomCards(count : vCardsHolder.subviews.count)
         
@@ -63,6 +88,7 @@ class ViewController: UIViewController {
             //Setting click listener
             card.isHidden = false
             card.setTitle("", for: .normal)
+            card.backgroundColor = normalCardBg
         }
         
         firstCard = nil
@@ -79,8 +105,6 @@ class ViewController: UIViewController {
         let cardIndex = vCardsHolder.subviews.index(of: cardButton)
         let card = cards[cardIndex!]
         
-    
-        
         if(!card.isFlipped){
             
             flipCount += 1
@@ -89,6 +113,7 @@ class ViewController: UIViewController {
                 
                 card.isFlipped = true
                 cardButton.setTitle(card.emoji, for: .normal)
+                cardButton.backgroundColor = activeCardBg
                 
                 firstCard = (card,cardButton)
                 return
@@ -97,6 +122,7 @@ class ViewController: UIViewController {
             if(secondCard==nil){
                 card.isFlipped = true
                 cardButton.setTitle(card.emoji, for: .normal)
+                cardButton.backgroundColor = activeCardBg
                 
                 secondCard = (card,cardButton)
                 return
@@ -116,7 +142,6 @@ class ViewController: UIViewController {
                     
                     matchesHappend += 2
                     pointSound?.play()
-
                     
         
                 }else{
@@ -124,6 +149,9 @@ class ViewController: UIViewController {
                     //No match flip it out
                     firstCard?.1.setTitle("", for: .normal)
                     secondCard?.1.setTitle("", for: .normal)
+                    
+                    firstCard?.1.backgroundColor = normalCardBg
+                    secondCard?.1.backgroundColor = normalCardBg
                     
                     firstCard?.0.isFlipped = false
                     secondCard?.0.isFlipped = false
@@ -135,6 +163,7 @@ class ViewController: UIViewController {
                 
                 card.isFlipped = true
                 cardButton.setTitle(card.emoji, for: .normal)
+                cardButton.backgroundColor = activeCardBg
                 
                 firstCard = (card,cardButton)
             }
