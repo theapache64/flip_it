@@ -2,7 +2,7 @@
 A simple concentration game for iOS
 
 ## Demo
-<img src="https://raw.githubusercontent.com/flip_it/master/demo.gif" width="400">
+<img src="https://raw.githubusercontent.com/theapache64/flip_it/master/demo.gif" width="400">
 
 ### TODOs
 
